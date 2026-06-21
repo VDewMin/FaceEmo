@@ -92,6 +92,7 @@ streamlit run app.py
 ```bash
 cd src
 python emotion_detector.py
+python image_emotion.py
 ```
 
 ## 📈 Training Process
