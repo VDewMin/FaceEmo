@@ -34,7 +34,7 @@ def preprocess_face(face_img):
         return None
     if len(face_img.shape) == 3:
         face_img = cv2.cvtColor(face_img, cv2.COLOR_BGR2GRAY)
-    face_img = cv2.resize(face_img,)
+    face_img = cv2.resize(face_img, (48, 48))
     face_img = face_img/255.0
     face_img = face_img.reshape(1, 48, 48, 1)
     return face_img
