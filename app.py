@@ -110,7 +110,7 @@ with tab1:
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("**Original**")
-            st.image(image, use_column_width=True)
+            st.image(image, use_container_width=True)
 
         with st.spinner("Detecting emotions..."):
             output_image, results, error = process_image(image)
