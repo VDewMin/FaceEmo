@@ -45,7 +45,7 @@ def predict_emotion(gray_frame, x, y, w, h):
 
 #  Process video file 
 def run_video(video_path):
-    # Check if file exists
+    
     if not os.path.exists(video_path):
         print(f"Error: File not found — {video_path}")
         return
@@ -79,10 +79,9 @@ def run_video(video_path):
                 cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
                 continue
 
-            # Convert to grayscale for face detection
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-            # Detect faces
+            
             if frame_count % 3 == 0:
                 faces = face_cascade.detectMultiScale(
                     gray,
@@ -92,20 +91,20 @@ def run_video(video_path):
                 )
             frame_count += 1
 
-            # Process each face
+            
             for (x, y, w, h) in faces:
                 emotion, confidence = predict_emotion(gray, x, y, w, h)
                 if emotion is None:
                     continue
 
-                # Draw box and label
+              
                 cv2.rectangle(frame, (x, y), (x+w, y+h), BOX_COLOR, 2)
                 label = f"{emotion} ({confidence:.1f}%)"
                 label_y = y - 10 if y - 10 > 20 else y + h + 25
                 cv2.putText(frame, label, (x, label_y),
                         FONT, 0.9, TEXT_COLOR, 2)
 
-            # Show frame
+           
             cv2.imshow('FaceEmo - Video Emotion Detector', frame)
 
         # Key controls

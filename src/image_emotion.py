@@ -58,10 +58,10 @@ def process_image(image_path):
     
     print(f"Processing: {image_path}")
 
-    #Convert to grayscale for face detection
+    
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    #Detect face
+    
     faces = face_cascade.detectMultiScale(
         gray,
         scaleFactor=1.1,
@@ -75,7 +75,6 @@ def process_image(image_path):
         print("No faces found in image.")
         return
     
-    #process each face
     for i, (x, y, w, h) in enumerate(faces):
         emotion, confidence = predict_emotion(gray, x, y, w, h)
 
@@ -84,21 +83,21 @@ def process_image(image_path):
 
         print(f"Face {i+1}: {emotion} ({confidence:.1f}%)")
 
-        #Draw recatangle around face
+        
         cv2.rectangle(frame, (x, y), (x+w, y+h), BOX_COLOR, 2)
 
-        #Display emotion label above the box
+        
         label = f"{emotion} ({confidence:.1f}%)"
         cv2.putText(frame, label, (x, y-10),
                     FONT, 0.9, TEXT_COLOR, 2)
         
-        #Save output image
+        
         filename = os.path.basename(image_path)
         output_path = f"../models/output_{filename}"
         cv2.imwrite(output_path, frame)
         print(f"Output saved to: {output_path}")
 
-        #Show the image
+       
         cv2.imshow('FaceEmo - Image Emotion Detection', frame)
         print("Press any key to close...")
         cv2.waitKey(0)

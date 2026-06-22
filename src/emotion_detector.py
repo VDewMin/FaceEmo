@@ -9,12 +9,10 @@ CASCADE_PATH = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
 
 EMOTION_LABELS = ['Angry', 'Disgust', 'Fear', 'Happy', 'Neutral', 'Sad', 'Surprise']
 
-#Colors for bounding box (BGR)
 BOX_COLOR = (0, 255, 0)
 TEXT_COLOR = (0, 255, 0)
 FONT = cv2.FONT_HERSHEY_COMPLEX
 
-#Load model and face detector
 print("Loading model...")
 model = load_model(MODEL_PATH)
 print("Model loaded!")
@@ -22,7 +20,7 @@ print("Model loaded!")
 face_cascade = cv2.CascadeClassifier(CASCADE_PATH)
 print("Face detector loaded!")
 
-#helper function: preprocess a face for the model
+#preprocess a face for the model
 def preprocess_face(face_img):
 
     #skip if empty
@@ -38,7 +36,7 @@ def preprocess_face(face_img):
     #normalize pixel value 0-256 to 0-1
     face_img = face_img/255.0
 
-    #Reshape to (1, 48, 48, 1) - model expects batch dimension
+    #Reshape to (1, 48, 48, 1) 
     face_img = face_img.reshape(1, 48, 48, 1)
 
     return face_img
@@ -46,7 +44,7 @@ def preprocess_face(face_img):
 #detect faces in a frame
 def detect_faces(frame):
 
-    #convert frame to grayscale
+    
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
     # scaleFactor: how much image size is reduced at each scale
@@ -105,12 +103,12 @@ def run_webcam():
             print("Error: Could not read frame")
             break
 
-        #Detect faces in the frame
+        
         gray, faces = detect_faces(frame)
 
         #process each detect face
         for(x, y, w, h) in faces:
-            #predict emotion
+            
             emotion, confidence = predict_emotion(gray, x, y, w, h)
 
             if emotion is None:
